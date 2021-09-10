@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useRef } from "react";
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View, Dimensions, Button } from "react-native";
 import {
@@ -9,6 +9,8 @@ import {
   ContributionGraph,
   StackedBarChart,
 } from "react-native-chart-kit";
+import DatePicker from "react-native-date-picker";
+import { Picker } from "@react-native-picker/picker";
 
 const data = [
   {
@@ -48,84 +50,130 @@ const data = [
   },
 ];
 
-export const Dashboard = () => (
-  <View style={styles.container}>
-    <Text style={styles.texto}>Dashboard</Text>
-    <Text>Pie Chart</Text>
+export const Dashboard = () => {
+  const [desde, setDesde] = useState(new Date());
+  const [hasta, setHasta] = useState(new Date());
+  const [openDesde, setOpenDesde] = useState(false);
+  const [openHasta, setOpenHasta] = useState(false);
+  const [vacuna, setVacuna] = useState("");
+  const [vacunaOpen, setVacunaOpen] = useState(false);
 
-    <PieChart
-      data={data}
-      width={Dimensions.get("window").width}
-      height={350}
-      chartConfig={{
-        backgroundColor: "#e26a00",
-        backgroundGradientFrom: "#fb8c00",
-        backgroundGradientTo: "#ffa726",
-        decimalPlaces: 2, // optional, defaults to 2dp
-        color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-        labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-        style: {
-          borderRadius: 10,
-        },
-        propsForDots: {
-          r: "6",
-          strokeWidth: "2",
-          stroke: "#ffa726",
-        },
-      }}
-      accessor={"population"}
-      backgroundColor={"transparent"}
-      paddingLeft={"40"}
-      center={[10, 25]}
-      absolute
-    />
-    <Text>Bezier Line Chart</Text>
-    <LineChart
-      data={{
-        labels: ["January", "February", "March", "April", "May", "June"],
-        datasets: [
-          {
-            data: [
-              Math.random() * 100,
-              Math.random() * 100,
-              Math.random() * 100,
-              Math.random() * 100,
-              Math.random() * 100,
-              Math.random() * 100,
-            ],
+  return (
+    <View style={styles.container}>
+      <View style={styles.row}>
+        <Button title="Desde" onPress={() => setOpenDesde(true)} />
+        <Button title="Hasta" onPress={() => setOpenHasta(true)} />
+        <Button title="Vacuna" onPress={() => setVacunaOpen(!vacunaOpen)} />
+      </View>
+      <View style={[vacunaOpen ? null : styles.cerrado]}>
+        <Picker
+          selectedValue={vacuna}
+          onValueChange={(itemValue, itemIndex) => setVacuna(itemValue)}
+        >
+          <Picker.Item label="Sputnik V" value="s" />
+          <Picker.Item label="Covishield" value="c" />
+        </Picker>
+      </View>
+
+      <DatePicker
+        modal
+        open={openDesde}
+        date={desde}
+        onConfirm={(date) => {
+          setOpenDesde(false);
+          setDesde(date);
+        }}
+        onCancel={() => {
+          setOpenDesde(false);
+        }}
+      />
+
+      <DatePicker
+        modal
+        open={openHasta}
+        date={hasta}
+        onConfirm={(date) => {
+          setOpenHasta(false);
+          setHasta(date);
+        }}
+        onCancel={() => {
+          setOpenHasta(false);
+        }}
+      />
+
+      <PieChart
+        data={data}
+        width={Dimensions.get("window").width}
+        height={350}
+        chartConfig={{
+          backgroundColor: "#e26a00",
+          backgroundGradientFrom: "#fb8c00",
+          backgroundGradientTo: "#ffa726",
+          decimalPlaces: 2, // optional, defaults to 2dp
+          color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+          labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+          style: {
+            borderRadius: 10,
           },
-        ],
-      }}
-      width={Dimensions.get("window").width} // from react-native
-      height={220}
-      yAxisLabel="$"
-      yAxisSuffix="k"
-      yAxisInterval={1} // optional, defaults to 1
-      chartConfig={{
-        backgroundColor: "#e26a00",
-        backgroundGradientFrom: "#fb8c00",
-        backgroundGradientTo: "#ffa726",
-        decimalPlaces: 2, // optional, defaults to 2dp
-        color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-        labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-        style: {
+          propsForDots: {
+            r: "6",
+            strokeWidth: "2",
+            stroke: "#ffa726",
+          },
+        }}
+        accessor={"population"}
+        backgroundColor={"transparent"}
+        paddingLeft={"40"}
+        center={[10, 25]}
+        absolute
+      />
+      <LineChart
+        data={{
+          labels: ["January", "February", "March", "April", "May", "June"],
+          datasets: [
+            {
+              data: [
+                Math.random() * 100,
+                Math.random() * 100,
+                Math.random() * 100,
+                Math.random() * 100,
+                Math.random() * 100,
+                Math.random() * 100,
+              ],
+            },
+          ],
+        }}
+        width={Dimensions.get("window").width} // from react-native
+        height={220}
+        yAxisLabel="$"
+        yAxisSuffix="k"
+        yAxisInterval={1} // optional, defaults to 1
+        chartConfig={{
+          backgroundColor: "#e26a00",
+          backgroundGradientFrom: "#fb8c00",
+          backgroundGradientTo: "#ffa726",
+          decimalPlaces: 2, // optional, defaults to 2dp
+          color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+          labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+          style: {
+            borderRadius: 16,
+          },
+          propsForDots: {
+            r: "6",
+            strokeWidth: "2",
+            stroke: "#ffa726",
+          },
+        }}
+        bezier
+        style={{
+          marginVertical: 8,
           borderRadius: 16,
-        },
-        propsForDots: {
-          r: "6",
-          strokeWidth: "2",
-          stroke: "#ffa726",
-        },
-      }}
-      bezier
-      style={{
-        marginVertical: 8,
-        borderRadius: 16,
-      }}
-    />
-    <Button title="Detalle" />
-  </View>
-);
+        }}
+      />
+      <Button title="Detalle" />
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -137,5 +185,13 @@ const styles = StyleSheet.create({
     textAlign: "center",
     padding: 10,
     margin: 10,
+  },
+  row: {
+    flexDirection: "row",
+    alignItems: "center",
+    alignSelf: "center",
+  },
+  cerrado: {
+    display: "none",
   },
 });
