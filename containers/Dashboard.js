@@ -11,6 +11,11 @@ import {
 } from "react-native-chart-kit";
 import DatePicker from "react-native-date-picker";
 import { Picker } from "@react-native-picker/picker";
+import axios from "axios";
+
+const COLLECTION_NAME = "vacunacion";
+const APIKEY = "tdp2tp02021";
+const URL = "https://tdp2server.herokuapp.com/vacunacion?key=" + APIKEY;
 
 const data = [
   {
@@ -57,7 +62,19 @@ export const Dashboard = () => {
   const [openHasta, setOpenHasta] = useState(false);
   const [vacuna, setVacuna] = useState("");
   const [vacunaOpen, setVacunaOpen] = useState(false);
+  const [vacunacionData, setVacunacionData] = React.useState([]);
 
+  React.useEffect(() => {
+    axios
+      .get(URL)
+      .then(function (response) {
+        console.log(response.data);
+        setVacunacionData(response.data);
+      })
+      .catch((e) => {
+        console.log("Error:", e);
+      });
+  }, []);
   return (
     <View style={styles.container}>
       <View style={styles.row}>
