@@ -12,6 +12,7 @@ import {
 import DatePicker from "react-native-date-picker";
 import { Picker } from "@react-native-picker/picker";
 import axios from "axios";
+import { ScrollView } from "react-native-gesture-handler";
 
 const COLLECTION_NAME = "vacunacion";
 const APIKEY = "tdp2tp02021";
@@ -76,6 +77,7 @@ export const Dashboard = () => {
       });
   }, []);
   return (
+    <ScrollView>
     <View style={styles.container}>
       <View style={styles.row}>
         <Button title="Desde" onPress={() => setOpenDesde(true)} />
@@ -189,6 +191,7 @@ export const Dashboard = () => {
       />
       <Button title="Detalle" />
     </View>
+    </ScrollView>
   );
 };
 

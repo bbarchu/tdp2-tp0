@@ -16,7 +16,7 @@ const RootComponent = () => {
       <Stack.Navigator>
         <Stack.Screen
           name="Plan de vacunación COVID-19"
-          component={Dashboard}
+          component={Details}
         />
         <Stack.Screen name="Detalles" component={Details} />
       </Stack.Navigator>
