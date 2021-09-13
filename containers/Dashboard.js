@@ -31,6 +31,7 @@ export const Dashboard = (props) => {
       if (!state.isConnected) {
         alert("No hay conexión!");
       } else {
+        NetInfo.addEventListener(handleFirstConnectivityChange);
         console.log("fetching data");
         axios
           .get(URL)
@@ -70,7 +71,9 @@ export const Dashboard = (props) => {
   }, [filteredData]);
 
   /* formato 22FEB2021 */
-
+  const handleFirstConnectivityChange = (connectionInfo) => {
+    if (!connectionInfo.isConnected) alert("Se perdio la conexion!!");
+  };
   const getMonthNumber = (mes) => {
     switch (mes) {
       case "JAN":
