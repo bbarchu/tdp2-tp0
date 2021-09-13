@@ -129,13 +129,13 @@ const styles = StyleSheet.create({
     alignSelf: "center",
   },
   date: {
-    borderColor: "red",
+    borderColor: "black",
     borderBottomWidth: 2,
     margin: 5,
     backgroundColor: "skyblue",
   },
   dateText: {
-    color: "red",
+    color: "black",
     fontSize: 18,
   },
   cerrado: {

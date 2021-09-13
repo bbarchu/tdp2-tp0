@@ -19,8 +19,8 @@ export const Dashboard = (props) => {
   const [vacunacionDataPie, setVacunacionDataPie] = React.useState([]);
   const [lineLabels, setlineLabels] = React.useState(["1", "2"]);
   const [vacunacionDataLine, setVacunacionDataLine] = React.useState([1, 2]);
-  const [dateFrom, setDateFrom] = useState(new Date(2021, 0, 1));
-  const [dateTo, setDateTo] = useState(new Date(2021, 0, 15));
+  const [dateFrom, setDateFrom] = useState(new Date(2021, 2, 1));
+  const [dateTo, setDateTo] = useState(new Date(2021, 2, 15));
   const [allData, setAlldata] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
 
@@ -241,8 +241,8 @@ const styles = StyleSheet.create({
     fontSize: 15,
     color: "#111",
     textAlign: "center",
-    padding: 10,
-    margin: 10,
+    padding: 5,
+    margin: 5,
   },
   row: {
     flexDirection: "row",
@@ -257,7 +257,7 @@ const styles = StyleSheet.create({
     color: "blue",
     width: 200,
     marginLeft: 110,
-    marginBottom: 30,
+    marginBottom: 5,
     fontSize: 22,
     borderColor: "blue",
     borderWidth: 10,

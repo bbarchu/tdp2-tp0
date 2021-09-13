@@ -12,7 +12,7 @@ export const CustomLineChart = ({ lineLabels, vacunacionDataLine }) => {
           datasets: [{ data: vacunacionDataLine }],
         }}
         width={Dimensions.get("window").width - 30} // from react-native
-        height={Dimensions.get("window").height / 2.5}
+        height={Dimensions.get("window").height / 3.1}
         // yAxisLabel="$"
         // yAxisSuffix="k"
         yAxisInterval={1} // optional, defaults to 1
